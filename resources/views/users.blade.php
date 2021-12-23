@@ -3,7 +3,7 @@
 @section('content')
 <section class="container">
 
-    <index :categories = '{{ $categories }}'/>
+    <users :users="{{ $users }}" :roles="{{ $roles }}"/>
 
 </section>
 @endsection

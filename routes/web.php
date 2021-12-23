@@ -11,10 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/users', 'UserController@users_view');
+Route::delete('/users/delete/{user}', 'UserController@delete');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
