@@ -2,8 +2,6 @@
 
 @section('content')
 <section class="container">
-
-    <edit-users :users="{{ $users }}" :roles="{{ $roles }}"/>
-
+    <index-role :roles="{{ $roles }}">
 </section>
 @endsection

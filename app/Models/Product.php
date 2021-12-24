@@ -15,4 +15,16 @@ class Product extends Model
     public function category(){
         return $this->belongsTo(Category::class);
     }
+
+    protected $appends = ['short_descript', 'short_name'];
+
+    public function getShortDescriptAttribute()
+    {
+        return \Str::limit($this->description, 117);
+    }
+
+    public function getShortNameAttribute()
+    {
+        return \Str::limit($this->name, 20);
+    }
 }

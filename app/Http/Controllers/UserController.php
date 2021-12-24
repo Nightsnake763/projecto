@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function users_view()
+    public function view()
     {
         $users = User::get();
         $roles = Role::get();
@@ -17,7 +17,7 @@ class UserController extends Controller
 
     public function delete(User $user)
     {
-        $user->products->delete();
+        $user->products()->delete();
         $user->delete();
 
         return response()->json([

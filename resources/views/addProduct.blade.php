@@ -3,7 +3,7 @@
 @section('content')
 <section class="container">
 
-    <edit-users :users="{{ $users }}" :roles="{{ $roles }}"/>
+    <store-products :id="{{ $id }}" :categories="{{ $categories }}"/>
 
 </section>
 @endsection

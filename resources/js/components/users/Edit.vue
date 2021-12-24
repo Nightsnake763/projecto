@@ -30,8 +30,9 @@
 
         methods: {
             async deleteUser(user, index) {
-                await axios.delete(`/users/delete/${user.id}`).then(res => {
+                await axios.delete(`/Users/delete/${user.id}`).then(res => {
                     if (res.data.deleted) {
+                        console.log(res.data.product)
                         alert('deleted')
                     }
                 });
