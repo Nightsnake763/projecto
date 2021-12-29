@@ -2,6 +2,6 @@
 
 @section('content')
 <section class="container">
-    <buy-product :product="{{ $product }}"/>
+    <my-products :products="{{ $products }}" :categories="{{ $categories }}"/>
 </section>
 @endsection

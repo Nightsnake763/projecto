@@ -5,36 +5,44 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
-    public function storeView($id){
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function buyView(Product $product){
+        $user = User::find($product->user_id);
+        return view('user/product/buy', compact('product', 'user'));
+    }
+
+    public function productsView(){
         $categories = Category::get();
-        return view('addProduct',compact('id', 'categories'));
+        $users = User::with('products')->get();
+        return view('admin/product/view', compact('categories', 'users'));
     }
 
-    public function buy_view(Product $product){
-        return view('buy', compact('product'));
-    }
-
-    public function store(Request $request, $id){
+    public function store(ProductRequest $request){
         $product = new Product($request->all());
-        $product->user_id = $id;
+        $product->user_id = auth()->user()->id;
         $product->img_route = "/images/default.png";
         $product->save();
 
         return response()->json([
-            'saved' => true,
+            'saved' => true
         ]);
     }
 
-    public function update(Request $request, Product $product){
+    public function update(ProductRequest $request, Product $product){
         $product->update($request->all());
         $product->save();
 
         return response()->json([
-            'updated' => true
+            'updated' => true,
+            'id' => $product->id
         ]);
     }
 

@@ -21,7 +21,7 @@
     </section>
 </template>
 <script>
-    import Edit from "./Edit";
+    import Edit from "./Modal";
 
     export default {
         props: ['roles'],

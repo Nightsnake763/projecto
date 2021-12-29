@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesTable extends Migration
+class AddDefaultRoles extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name');
-            $table->timestamps();
-        });
+        \Spatie\Permission\Models\Role::create(['name' => 'admin']);
+        \Spatie\Permission\Models\Role::create(['name' => 'user']);
     }
 
     /**
@@ -27,6 +24,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        //
     }
 }
