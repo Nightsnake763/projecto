@@ -6,6 +6,9 @@ use App\User;
 use App\Models\Category;
 use App\Models\Product;
 use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
+use Carbon\Carbon;
 
 class ProductController extends Controller
 {
@@ -28,16 +31,30 @@ class ProductController extends Controller
     public function store(ProductRequest $request){
         $product = new Product($request->all());
         $product->user_id = auth()->user()->id;
-        $product->img_route = "/images/default.png";
+
+        if ($request->file('image') == null) {
+            $product->img_route = "images/default.png";
+        } else{
+            $name = Carbon::now()->timestamp . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->move(public_path('/images'), $name);
+            $product->img_route = "images/" . $name;
+        };
         $product->save();
 
         return response()->json([
-            'saved' => true
+            'saved' => true,
         ]);
     }
 
     public function update(ProductRequest $request, Product $product){
         $product->update($request->all());
+
+        if ($request->file('image') != null) {
+            $name = Carbon::now()->timestamp . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->move(public_path('/images'), $name);
+            $product->img_route = "images/" . $name;
+        };
+
         $product->save();
 
         return response()->json([

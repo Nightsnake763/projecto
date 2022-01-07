@@ -2443,48 +2443,94 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['categories', 'product', 'update'],
+  data: function data() {
+    return {
+      imagen: null
+    };
+  },
   methods: {
     store: function store() {
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var fd, _fd;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 if (!_this.update) {
-                  _context.next = 5;
+                  _context.next = 11;
                   break;
                 }
 
-                _context.next = 3;
-                return axios.post("/Product/update/".concat(_this.product.id), _this.product).then(function (res) {
+                fd = new FormData();
+                fd.append('name', _this.product.name);
+                fd.append('description', _this.product.description);
+                fd.append('stock', _this.product.stock);
+                fd.append('category_id', _this.product.category_id);
+                fd.append('image', _this.imagen);
+                _context.next = 9;
+                return axios.post("/Product/update/".concat(_this.product.id), fd).then(function (res) {
                   if (res.data.updated) {
                     _this.product = {}, $('#Modal').modal('toggle');
                   }
                 });
 
-              case 3:
-                _context.next = 7;
+              case 9:
+                _context.next = 19;
                 break;
 
-              case 5:
-                _context.next = 7;
-                return axios.post("/Product/store/", _this.product).then(function (res) {
+              case 11:
+                _fd = new FormData();
+
+                _fd.append('name', _this.product.name);
+
+                _fd.append('description', _this.product.description);
+
+                _fd.append('stock', _this.product.stock);
+
+                _fd.append('category_id', _this.product.category_id);
+
+                _fd.append('image', _this.imagen);
+
+                _context.next = 19;
+                return axios.post("/Product/store/", _fd).then(function (res) {
                   if (res.data.saved) {
                     _this.$parent.all_products.push(_this.product), _this.product = {}, $('#Modal').modal('toggle');
                   }
+
+                  console.log(res);
                 });
 
-              case 7:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
         }, _callee);
       }))();
+    },
+    setImage: function setImage(event) {
+      this.imagen = event.target.files[0], console.log(this.imagen);
     }
   }
 });
@@ -40107,6 +40153,7 @@ var render = function () {
                 "form",
                 {
                   staticClass: "form",
+                  attrs: { enctype: "multypatmultipart/form-data" },
                   on: {
                     submit: function ($event) {
                       $event.preventDefault()
@@ -40247,6 +40294,57 @@ var render = function () {
                   ]),
                   _vm._v(" "),
                   _vm._m(0),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group mb-3" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm.update
+                      ? _c("div", { staticClass: "custom-file" }, [
+                          _c("input", {
+                            ref: "myFiles",
+                            staticClass: "custom-file-input",
+                            attrs: {
+                              type: "file",
+                              id: "file",
+                              "aria-describedby": "inputGroupFileAddon01",
+                            },
+                            on: { change: _vm.setImage },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-label",
+                              attrs: { for: "inputGroupFile01" },
+                            },
+                            [_vm._v("Choose file")]
+                          ),
+                        ])
+                      : _c("div", { staticClass: "custom-file" }, [
+                          _c("input", {
+                            ref: "myFiles",
+                            staticClass: "custom-file-input",
+                            attrs: {
+                              type: "file",
+                              id: "file",
+                              "aria-describedby": "inputGroupFileAddon01",
+                              required: "",
+                            },
+                            on: { change: _vm.setImage },
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-label",
+                              attrs: { for: "inputGroupFile01" },
+                            },
+                            [_vm._v("Choose file")]
+                          ),
+                        ]),
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2),
                 ]
               ),
             ]),
@@ -40257,6 +40355,27 @@ var render = function () {
   ])
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [_c("label", [_vm._v("Image: ")])])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c(
+        "span",
+        {
+          staticClass: "input-group-text",
+          attrs: { id: "inputGroupFileAddon01" },
+        },
+        [_vm._v("Upload")]
+      ),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
